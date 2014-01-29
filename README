@@ -1,0 +1,16 @@
+This is the bare minimum C required to sign requests with an SSH agent
+for use against the Joyent Manta Web API.  The function to start reading
+at is ```manta_signing_example()``` in `manta_signing_example.c`.
+
+More to come later!
+
+
+e.g.
+
+user@smartos c-manta-signing $ make
+gcc -Wall -Wextra -Werror -o manta_signing_example manta_signing_example.c ssh_signing.c crypto_utils.c -lsocket -lnsl -lcrypto
+user@smartos c-manta-signing $ ./manta_signing_example /user/stor/url 2>/dev/null
+curl -ki \
+  -H 'date: Wed, 29 Jan 2014 23:55:20 GMT' \
+  -H 'Authorization: Signature keyId="/user/keys/0f:0d:0f:03:06:02:0a:0a:05:0b:01:80:13:22:a1:2e",algorithm="rsa-sha1",signature="uUIB3rJVuMdO...3W/hEIQ=="' \
+  https://us-east.manta.joyent.com/user/stor/url
